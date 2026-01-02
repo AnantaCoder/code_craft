@@ -11,7 +11,7 @@ The Clang project provides a language front-end and tooling infrastructure for l
 
 3. Think of compilation as thinking → planning → acting.
 Clang = the reader & translator
-LLVM = the thinking + optimizing engine
+LLVM(low level virtual machine) = the thinking + optimizing engine
 Assembler / Machine code = the muscle
 They are related, but not the same thing.
 
@@ -39,4 +39,15 @@ The LLVM Core libraries provide a modern source- and target-independent optimize
                    ↓
                 Machine code
 
+
+6. clang ast ->
+
+this is reqiuired in the syntax phase 
+Clang AST (Abstract Syntax Tree) is the structured, hierarchical representation of a C/C++ program produced by the Clang compiler frontend, where source code is parsed according to the language grammar and converted into a tree of nodes that represent declarations, expressions, statements, and types, while omitting irrelevant surface details such as formatting and comments.
+
+In simpler words:
+Clang AST is how Clang internally understands your C/C++ code—not as text, but as a precise tree of meaning that tools can analyze, transform, and reason about safely.
+
+7. Parser (short definition):
+A parser is the part of a compiler that takes tokens from the lexer and checks whether their order follows the language grammar, producing a structured representation of the program—usually an AST (Abstract Syntax Tree).
 

@@ -1,18 +1,26 @@
 from fastapi import APIRouter
-
-# importing necessary schemas
-
 from pydantic import BaseModel
-from app.services.pipeline import run_lexical_pipeline
+from app.services.pipeline import run_pipeline,run_lexical_pipeline , run_syntax_pipeline
 
 
 router = APIRouter()
 
 
-class LexicalRequest(BaseModel):
+class CodeRequest(BaseModel):
         code: str
 
 
+@router.post("/analyze/full")
+def full(req: CodeRequest):
+        return run_pipeline(req.code)
+
+
 @router.post("/analyze/lexical")
-def lexical(req: LexicalRequest):
+def lexical(req: CodeRequest):
         return run_lexical_pipeline(req.code)
+
+
+@router.post("/analyze/syntax")
+def syntax(req: CodeRequest):
+        return run_syntax_pipeline(req.code)
+
