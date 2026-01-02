@@ -1,15 +1,3 @@
-1 . React sends code
-
-2 . FastAPI saves it
-
-3. Pipeline runs each compiler stage
-
-4. Outputs captured
-
-5.   JSON returned
-
-6. React visualizes
-
 code file structure :--------------------------------------
 backend/
  ├── app/
@@ -41,3 +29,21 @@ backend/
  │           └── config.py
  ├── sandbox.Dockerfile
  ├── requirements.txt
+
+1 . routers/ 
+Purpose: HTTP boundary since http is volatile 
+
+2. services/ 
+Purpose: Business logic This is where meaningful work happens.
+
+3. services/stages -> easier debugging and compiler phases are conceptually independent.
+
+4. pipeline.py --> enforces in what order does this happens , domain logic 
+
+5. sandbox => infrastructure safely execute untrusted compiler commands.
+
+6. utils/ ->helpers 
+
+7. schemas/ -> shape of data enters and leaves this system
+
+8. core/config.py -> for centralization of the timeouts , memory limits , compiler flags , sandbox options 

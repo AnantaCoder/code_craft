@@ -1,0 +1,42 @@
+1. sandbox : a secure and isolated environment for application aka code  preventing them affecting the host system .
+Isolation , controllability , Observability , Reset are the common features 
+
+Sandbox = blast radius = zero.
+
+
+2. Clang: a C language family frontend for LLVM
+The Clang project provides a language front-end and tooling infrastructure for languages in the C language family (C, C++, Objective C/C++, OpenCL, and CUDA) for the LLVM project. Both a GCC-compatible compiler driver (clang) and an MSVC-compatible compiler driver (clang-cl.exe) are provided. [
+    it handles the parts of compilation closest to human-written code , understand the programming language 
+]
+
+3. Think of compilation as thinking → planning → acting.
+Clang = the reader & translator
+LLVM = the thinking + optimizing engine
+Assembler / Machine code = the muscle
+They are related, but not the same thing.
+
+4. LLVM - it understand the computation and hardware , building the programming language
+    yt:{https://www.youtube.com/watch?v=BT2Cv-Tjq7Q} 
+
+The LLVM Core libraries provide a modern source- and target-independent optimizer, along with code generation support for many popular CPUs (as well as some less common ones!) These libraries are built around a well specified code representation known as the LLVM intermediate representation ("LLVM IR"). The LLVM Core libraries are well documented, and it is particularly easy to invent your own language (or port an existing compiler) to use LLVM as an optimizer and code generator.
+
+    history: https://aosabook.org/en/v1/llvm.html
+
+5. pipeline :
+                C source code
+                   ↓
+                Clang
+                   ↓
+                Tokens → AST → Semantic checks
+                   ↓
+                LLVM IR
+                   ↓
+                LLVM optimizer
+                   ↓
+                LLVM backend
+                   ↓
+                Assembly
+                   ↓
+                Machine code
+
+

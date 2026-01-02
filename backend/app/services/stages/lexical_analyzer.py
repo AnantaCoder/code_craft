@@ -1,0 +1,67 @@
+"""Given raw source code, what are the smallest meaningful symbols (tokens)?"""
+
+"""
+int a = 5;
+becomes :
+['INT_KEYWORD',
+'IDENTIFIER(a)',
+'ASSIGNMENT_OPERATOR(=)', 
+'INTEGER_LITERAL(5)', 
+'SEMICOLON(;)']
+"""
+import re
+from typing import List, Dict
+from pathlib import Path
+from app.sandbox.docker_runner import run_in_sandbox
+import logging
+
+logger = logging.getLogger(__name__)
+
+TOKEN_REGEX = re.compile(
+    r"(?P<kind>\w+)\s+'(?P<value>[^']*)'.*Loc=<.*:(?P<line>\d+):(?P<col>\d+)>"
+)
+
+def parse_tokens(raw: str) -> List[Dict]:
+    tokens = []
+
+    for line in raw.splitlines():
+        match = TOKEN_REGEX.search(line)
+        if not match:
+            continue
+
+        tokens.append({
+            "kind": match.group("kind"),
+            "value": match.group("value"),
+            "line": int(match.group("line")),
+            "column": int(match.group("col")),
+        })
+
+    return tokens
+
+
+def run_lexical_analysis(source_path: Path, include_raw: bool=False) -> Dict:
+    command = [
+        "clang",
+        "-Xclang",
+        "-dump-tokens",
+        str(source_path)
+    ]
+
+    result = run_in_sandbox(
+        command=command,
+        working_dir=str(source_path.parent)
+    )
+
+    raw_output = result["stdout"] + result["stderr"]
+    tokens = parse_tokens(raw_output)
+    logger.debug("Raw lexical output:\n%s", raw_output)
+
+    response = {
+        "stage": "lexical",
+        "status": "ok" if tokens else "error",
+        "token_count": len(tokens),
+        "tokens": tokens
+    }
+    if include_raw:
+        response["raw"] = raw_output
+    return response
