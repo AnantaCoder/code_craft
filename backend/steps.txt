@@ -1,0 +1,43 @@
+1 . React sends code
+
+2 . FastAPI saves it
+
+3. Pipeline runs each compiler stage
+
+4. Outputs captured
+
+5.   JSON returned
+
+6. React visualizes
+
+code file structure :--------------------------------------
+backend/
+ ├── app/
+ │    ├── main.py
+ │    ├── routers/
+ │    │       ├──analyze.py
+ |    |       └──security.py
+ │    ├── services/
+ │    │      ├── pipeline.py
+ │    │      ├── stages/
+ │    │      │     ├── lexical.py
+ │    │      │     ├── syntax.py
+ │    │      │     ├── semantic.py
+ │    │      │     ├── ir.py
+ │    │      │     ├── optimization.py
+ │    │      │     ├── assembly.py
+ │    │      │     └── machine.py
+ │    ├── sandbox/
+ │    │      ├── docker_runner.py
+ │    │      └── limits.py
+ │    ├── schemas/
+ │    │      ├── request.py
+ │    │      └── response.py
+ │    ├── utils/
+ │    │      ├── temp.py
+ │    │      ├── command.py
+ │    │      └── cleanup.py
+ │    └── core/
+ │           └── config.py
+ ├── sandbox.Dockerfile
+ ├── requirements.txt
