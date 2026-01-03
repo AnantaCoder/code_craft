@@ -89,6 +89,58 @@ Failure Response:
 }
 ```
 
+## POST /api/analyze/semantic
+
+Request:
+
+```json
+{
+  "code": "int main(void) { int x = 5; return x; }"
+}
+```
+
+Success Response:
+
+```json
+{
+  "order": 3,
+  "stage": "semantic",
+  "status": "ok",
+  "output": {
+    "valid": true,
+    "summary": "Semantic analysis completed successfully"
+  },
+  "diagnostics": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+Failure Response:
+
+```json
+{
+  "order": 3,
+  "stage": "semantic",
+  "status": "error",
+  "output": {
+    "valid": false,
+    "summary": "Semantic analysis failed with 1 error(s)"
+  },
+  "diagnostics": {
+    "errors": [
+      {
+        "message": "use of undeclared identifier 'y'",
+        "line": 1,
+        "column": 35
+      }
+    ],
+    "warnings": []
+  }
+}
+```
+
 ## POST /api/analyze/full
 
 Request:
@@ -110,13 +162,13 @@ Success Response:
       "stage": "lexical",
       "status": "ok",
       "output": {
-        "token_count": 1,
+        "token_count": 7,
         "tokens": [
           {
-            "kind": "identifier",
-            "value": "main",
+            "kind": "int",
+            "value": "int",
             "line": 1,
-            "column": 5
+            "column": 1
           }
         ]
       },
@@ -136,6 +188,19 @@ Success Response:
           "range": {},
           "inner": [...]
         }
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    "semantic": {
+      "order": 3,
+      "stage": "semantic",
+      "status": "ok",
+      "output": {
+        "valid": true,
+        "summary": "Semantic analysis completed successfully"
       },
       "diagnostics": {
         "errors": [],
@@ -176,6 +241,60 @@ Failure Response (if syntax fails):
         "errors": [
           {
             "message": "syntax error message"
+          }
+        ],
+        "warnings": []
+      }
+    }
+  }
+}
+```
+
+Failure Response (if semantic fails):
+
+```json
+{
+  "status": "error",
+  "stages": {
+    "lexical": {
+      "order": 1,
+      "stage": "lexical",
+      "status": "ok",
+      "output": {
+        "token_count": 10,
+        "tokens": [...]
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    "syntax": {
+      "order": 2,
+      "stage": "syntax",
+      "status": "ok",
+      "output": {
+        "ast": {...}
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    "semantic": {
+      "order": 3,
+      "stage": "semantic",
+      "status": "error",
+      "output": {
+        "valid": false,
+        "summary": "Semantic analysis failed with 1 error(s)"
+      },
+      "diagnostics": {
+        "errors": [
+          {
+            "message": "use of undeclared identifier 'y'",
+            "line": 1,
+            "column": 35
           }
         ],
         "warnings": []
