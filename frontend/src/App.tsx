@@ -91,7 +91,7 @@ export function App() {
 
             <div className="mt-6 pt-4 border-t border-[#fbf0df]/20">
               <a
-                href="https://github.com/your-repo/code-craft"
+                href="https://github.com/anantacoder/code_craft"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#fbf0df] text-[#1a1a1a] px-4 py-2 rounded-lg font-bold text-sm hover:bg-[#f3d5a3] transition-colors"
