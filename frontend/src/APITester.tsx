@@ -1,8 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { useRef, type FormEvent } from "react";
 
 export function APITester() {
@@ -27,37 +22,41 @@ export function APITester() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <form onSubmit={testEndpoint} className="flex items-center gap-2">
-        <Label htmlFor="method" className="sr-only">
-          Method
-        </Label>
-        <Select name="method" defaultValue="GET">
-          <SelectTrigger className="w-25" id="method">
-            <SelectValue placeholder="Method" />
-          </SelectTrigger>
-          <SelectContent align="start">
-            <SelectItem value="GET">GET</SelectItem>
-            <SelectItem value="PUT">PUT</SelectItem>
-          </SelectContent>
-        </Select>
-        <Label htmlFor="endpoint" className="sr-only">
-          Endpoint
-        </Label>
-        <Input id="endpoint" type="text" name="endpoint" defaultValue="/api/hello" placeholder="/api/hello" />
-        <Button type="submit" variant="secondary">
+    <div className="mt-8 mx-auto w-full max-w-2xl text-left flex flex-col gap-4">
+      <form
+        onSubmit={testEndpoint}
+        className="flex items-center gap-2 bg-[#1a1a1a] p-3 rounded-xl font-mono border-2 border-[#fbf0df] transition-colors duration-300 focus-within:border-[#f3d5a3] w-full"
+      >
+        <select
+          name="method"
+          className="bg-[#fbf0df] text-[#1a1a1a] py-1.5 px-3 rounded-lg font-bold text-sm min-w-[0px] appearance-none cursor-pointer hover:bg-[#f3d5a3] transition-colors duration-100"
+        >
+          <option value="GET" className="py-1">
+            GET
+          </option>
+          <option value="PUT" className="py-1">
+            PUT
+          </option>
+        </select>
+        <input
+          type="text"
+          name="endpoint"
+          defaultValue="/api/hello"
+          className="w-full flex-1 bg-transparent border-0 text-[#fbf0df] font-mono text-base py-1.5 px-2 outline-none focus:text-white placeholder-[#fbf0df]/40"
+          placeholder="/api/hello"
+        />
+        <button
+          type="submit"
+          className="bg-[#fbf0df] text-[#1a1a1a] border-0 px-5 py-1.5 rounded-lg font-bold transition-all duration-100 hover:bg-[#f3d5a3] hover:-translate-y-px cursor-pointer whitespace-nowrap"
+        >
           Send
-        </Button>
+        </button>
       </form>
-      <Label htmlFor="response" className="sr-only">
-        Response
-      </Label>
-      <Textarea
+      <textarea
         ref={responseInputRef}
-        id="response"
         readOnly
         placeholder="Response will appear here..."
-        className="min-h-35 font-mono resize-y"
+        className="w-full min-h-[140px] bg-[#1a1a1a] border-2 border-[#fbf0df] rounded-xl p-3 text-[#fbf0df] font-mono resize-y focus:border-[#f3d5a3] placeholder-[#fbf0df]/40"
       />
     </div>
   );
