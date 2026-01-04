@@ -2,6 +2,8 @@
 
 A web-based C compiler visualization tool that breaks down the compilation process into interactive steps.
 
+![Code Craft Demo](demo.png)
+
 ## Core Engine (Backend)
 
 The backend is the heart of Code Craft, powered by Python and FastAPI. It orchestrates the entire compilation pipeline, providing a detailed look into how C code is transformed into machine instructions.
@@ -21,3 +23,10 @@ The backend is the heart of Code Craft, powered by Python and FastAPI. It orches
 ## Frontend
 
 A lightweight React application built with Bun that serves as the visual interface for the backend's analysis.
+
+## Requirements
+
+To run Code Craft locally, you need one of the following:
+
+- **Docker** — For sandboxed code execution (recommended)
+- **LLVM/Clang** — For local compilation without containerization
