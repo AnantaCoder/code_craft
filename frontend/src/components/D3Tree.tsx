@@ -498,23 +498,21 @@ export default function D3Tree({ data }: D3TreeProps) {
             )}
 
             {/* Minimap - hidden on very small screens, smaller on mobile */}
-            <div className={`absolute bg-[#1a1a1a]/90 border border-[#fbf0df]/30 rounded-lg p-1 sm:p-2 transition-opacity ${
-                isMobile ? 'bottom-2 right-2 opacity-70' : 'bottom-4 right-4'
-            } ${dimensions.width < 400 ? 'hidden' : ''}`}>
-                <svg 
-                    ref={minimapRef} 
-                    width={isMobile ? 100 : 150} 
+            <div className={`absolute bg-[#1a1a1a]/90 border border-[#fbf0df]/30 rounded-lg p-1 sm:p-2 transition-opacity ${isMobile ? 'bottom-2 right-2 opacity-70' : 'bottom-4 right-4'
+                } ${dimensions.width < 400 ? 'hidden' : ''}`}>
+                <svg
+                    ref={minimapRef}
+                    width={isMobile ? 100 : 150}
                     height={isMobile ? 66 : 100}
                 ></svg>
             </div>
 
             {/* Instructions - responsive text and positioning */}
-            <div className={`absolute text-[#fbf0df]/50 font-mono transition-all ${
-                isMobile 
-                    ? 'bottom-2 left-2 text-[9px] max-w-[60%]' 
+            <div className={`absolute text-[#fbf0df]/50 font-mono transition-all ${isMobile
+                    ? 'bottom-2 left-2 text-[9px] max-w-[60%]'
                     : 'bottom-4 left-4 text-xs'
-            }`}>
-                {isMobile 
+                }`}>
+                {isMobile
                     ? 'Tap to expand • Pinch to zoom • Drag to pan'
                     : 'Click nodes to expand/collapse • Scroll to zoom • Drag to pan • Hover for full text'
                 }
