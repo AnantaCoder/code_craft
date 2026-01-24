@@ -9,11 +9,13 @@ from typing import Dict, Any
 import json
 
 from app.sandbox.docker_runner import run_in_sandbox
+from app.core.config import get_clang_include_flags
 
 
 def syntax_analyzer(source_code_path: Path) -> Dict[str, Any]:
     command = [
         "clang",
+    ] + get_clang_include_flags() + [
         "-Xclang",
         "-ast-dump=json",
         "-fsyntax-only",

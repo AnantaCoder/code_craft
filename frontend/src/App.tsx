@@ -39,7 +39,7 @@ export function App() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-[#fbf0df]">How It Works</h2>
+              <h2 className="text-xl font-bold text-[#fbf0df]">How It Works - By Anirban Sarkar</h2>
               <button
                 onClick={() => setShowInfo(false)}
                 className="w-8 h-8 text-[#fbf0df]/60 hover:text-[#fbf0df] text-xl"

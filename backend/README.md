@@ -45,3 +45,34 @@ We are actively working on expanding the LLVM integration:
 - **Custom Optimization Passes**: Allowing users to toggle specific LLVM passes (e.g., `-mem2reg`, `-loop-unroll`) to see their individual effects.
 - **Control Flow Graphs (CFG)**: Visualizing the flow of the program based on the IR basic blocks.
 - **Cross-Compilation**: Demonstrating how LLVM can generate machine code for different architectures (ARM, WASM) from the same source.
+
+## Running Locally
+
+To run the backend locally (without Docker), use the following PowerShell command:
+
+```powershell
+$env:SANDBOX_MODE='local'; uvicorn app.main:app --reload
+```
+
+This sets the `SANDBOX_MODE` environment variable to `local` to bypass the Docker container requirement for code execution, and starts the FastAPI server with hot-reloading enabled.
+
+### Prerequisites for Local Mode
+
+For C standard library headers (like `stdio.h`) to work locally on Windows, you need one of:
+
+1. **MinGW** (Recommended for this project)
+   - The backend automatically detects MinGW at `C:\MinGW\include` and configures Clang to use those headers.
+   - Install via: Download from [mingw.org](https://mingw.org/) or use `winget install mingw`.
+
+2. **Visual Studio Build Tools**
+   - Install "Desktop development with C++" workload from [Visual Studio Downloads](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022).
+   - Clang will auto-detect MSVC headers.
+
+### How Header Includes Work
+
+The `app/core/config.py` module provides platform-aware include flags:
+- **Docker mode**: Uses system headers from `libc6-dev` and `build-essential` (installed in the container).
+- **Windows local**: Automatically adds MinGW include paths (`-I C:\MinGW\include`) and sets the `--target=x86_64-w64-mingw32` flag.
+- **Linux local**: Uses system headers (typically available via `build-essential`).
+
+All compiler stages automatically use these flags, so C code with `#include <stdio.h>` will compile correctly in both local and Docker modes.

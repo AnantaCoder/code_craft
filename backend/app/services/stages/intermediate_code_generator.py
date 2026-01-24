@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 from app.sandbox.docker_runner import run_in_sandbox
+from app.core.config import get_clang_include_flags_str
 
 
 # =========================
@@ -28,8 +29,9 @@ DI_COMPILE_UNIT_RE = re.compile(
 
 def generate_ir(source_path: Path) -> dict:
     ir_path = source_path.with_suffix(".ll")
-
-    command = f'clang -S -emit-llvm "{source_path.name}" -o "{ir_path.name}"'
+    
+    include_flags = get_clang_include_flags_str()
+    command = f'clang {include_flags} -S -emit-llvm "{source_path.name}" -o "{ir_path.name}"'
     result = run_in_sandbox(
         command=command,
         working_dir=str(source_path.parent)

@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
     clang \
     llvm \
     binutils \
+    libc6-dev \
+    build-essential \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
