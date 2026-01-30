@@ -1,0 +1,78 @@
+# Code Craft - Build Transcript
+# Author: Anirban Sarkar
+# Date: January 2026
+
+================================================================================
+                            STAGE 1: COMPLETED WORK
+================================================================================
+
+## What I've Built
+
+1. BACKEND (FastAPI + Python)
+   - 7-stage compilation pipeline:
+     * Lexical Analysis (tokenization)
+     * Syntax Analysis (AST generation)  
+     * Semantic Analysis (type checking)
+     * Intermediate Code (LLVM IR)
+     * Optimization (O2 passes)
+     * Assembly Generation
+     * Machine Code (disassembly)
+   
+   - Docker sandboxing with security:
+     * Network disabled
+     * Memory limits (128MB)
+     * CPU limits (0.5 cores)
+     * Non-root user execution
+   
+   - Cross-platform support:
+     * Windows local with MinGW headers
+     * Linux Docker container
+     * Platform-aware clang flags
+
+2. FRONTEND (React + Bun)
+   - D3.js interactive tree visualization
+   - Collapsible nodes with animations
+   - Flow particles on edges
+   - Minimap for navigation
+   - Zoom/pan controls
+   - Responsive design
+
+3. ARCHITECTURE HIGHLIGHTS
+   - Clean separation: routes → services → stages
+   - Platform config centralized in config.py
+   - Response limiting for large includes (stdio.h)
+
+================================================================================
+                         STAGE 2: WHAT'S NEXT (llvmlite)
+================================================================================
+
+## Implementation plan 
+
+1. Install llvmlite
+2. Create directory structure
+3. Implement codegen.py
+4. Implement lexer.py  
+5. Implement ast_nodes.py
+6. Implement parser.py
+7. Implement jit_executor.py
+8. Add new API endpoint
+9. Frontend toggle
+10. Build CLI tool (craftc)
+================================================================================
+                              CODECRAFTLANG SYNTAX
+================================================================================
+
+// Function definition
+
+
+// Variables
+
+
+// Expressions
+
+// Control flow
+
+
+// Loops
+
+// i dont know what to do next . 
