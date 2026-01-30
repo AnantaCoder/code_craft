@@ -30,3 +30,4 @@ To run Code Craft locally, you need one of the following:
 
 - **Docker** — For sandboxed code execution (recommended)
 - **LLVM/Clang** — For local compilation without containerization
+- **MinGW GCC** — For including header files in local compilation (Windows only)

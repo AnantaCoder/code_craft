@@ -1,11 +1,13 @@
 from pathlib import Path
 from app.sandbox.docker_runner import run_in_sandbox
+from app.core.config import get_clang_include_flags_str
 
 
 def generate_assembly(source_path: Path) -> dict:
     
     asm_path = source_path.with_suffix(".s")
-    command = f'clang -S "{source_path.name}" -o "{asm_path.name}"'
+    include_flags = get_clang_include_flags_str()
+    command = f'clang {include_flags} -S "{source_path.name}" -o "{asm_path.name}"'
     result = run_in_sandbox(
         command=command,
         working_dir=str(source_path.parent),

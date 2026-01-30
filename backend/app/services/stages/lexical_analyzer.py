@@ -13,6 +13,7 @@ import re
 from typing import List, Dict
 from pathlib import Path
 from app.sandbox.docker_runner import run_in_sandbox
+from app.core.config import get_clang_include_flags
 import logging
 
 logger = logging.getLogger(__name__)
@@ -60,7 +61,7 @@ def parse_tokens(raw: str) -> List[Dict]:
 
 def run_lexical_analysis(source_path: Path, include_raw: bool = False) -> Dict:
     
-    command = ["clang", "-Xclang", "-dump-tokens", str(source_path)]
+    command = ["clang"] + get_clang_include_flags() + ["-Xclang", "-dump-tokens", str(source_path)]
 
     result = run_in_sandbox(command=command, working_dir=str(source_path.parent))
 

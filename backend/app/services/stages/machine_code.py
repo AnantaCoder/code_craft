@@ -9,6 +9,7 @@
 
 from pathlib import Path
 from app.sandbox.docker_runner import run_in_sandbox
+from app.core.config import get_clang_include_flags_str
 import platform
 import re
 
@@ -41,7 +42,8 @@ def generate_machine_code(source_path: Path) -> dict:
         obj_path = source_path.with_suffix(".o")
         disassembler = "objdump"
 
-    compile_cmd = f'clang -c "{source_path.name}" -o "{obj_path.name}"'
+    include_flags = get_clang_include_flags_str()
+    compile_cmd = f'clang {include_flags} -c "{source_path.name}" -o "{obj_path.name}"'
     compile_result = run_in_sandbox(
         command=compile_cmd,
         working_dir=str(source_path.parent),

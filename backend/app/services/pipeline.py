@@ -6,13 +6,15 @@ from app.services.stages.intermediate_code_generator import generate_ir
 from app.services.stages.code_optimiser import optimizer_ir
 from app.services.stages.assembly import generate_assembly
 from app.services.stages.machine_code import generate_machine_code
+from app.utils.response_limiter import limit_response_data
 import platform
 
 
 def run_lexical_pipeline(code: str) -> dict:
     source_path = create_temp_file(code)
     try:
-        return run_lexical_analysis(source_path)
+        result = run_lexical_analysis(source_path)
+        return limit_response_data(result, "lexical")
     finally:
         cleanup_temp(source_path)
 
@@ -20,7 +22,8 @@ def run_lexical_pipeline(code: str) -> dict:
 def run_syntax_pipeline(code: str) -> dict:
     source_path = create_temp_file(code)
     try:
-        return syntax_analyzer(source_path)
+        result = syntax_analyzer(source_path)
+        return limit_response_data(result, "syntax")
     finally:
         cleanup_temp(source_path)
 
@@ -53,8 +56,8 @@ def run_pipeline(code: str) -> dict:
     }
 
     try:
-        lexical_result = run_lexical_analysis(source_path)
-        syntax_result = syntax_analyzer(source_path)
+        lexical_result = limit_response_data(run_lexical_analysis(source_path), "lexical")
+        syntax_result = limit_response_data(syntax_analyzer(source_path), "syntax")
 
         if syntax_result["status"] == "error":
             return {
@@ -119,7 +122,7 @@ def run_pipeline(code: str) -> dict:
                 },
             }
 
-        machine_code_result = generate_machine_code(source_path)
+        machine_code_result = limit_response_data(generate_machine_code(source_path), "machine_code")
 
         if machine_code_result["status"] == "error":
             return {
