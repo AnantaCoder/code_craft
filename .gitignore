@@ -47,3 +47,6 @@ frontend/build/
 # OS
 .DS_Store
 Thumbs.db
+
+# LLVM Roadmap
+guide.md

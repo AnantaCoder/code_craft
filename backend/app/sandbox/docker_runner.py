@@ -28,6 +28,20 @@ def run_in_sandbox(command: str | list[str], working_dir: str) -> dict:
     # Resolve absolute path for volume mounting
     abs_working_dir = str(Path(working_dir).resolve())
 
+    # Check if we are running in a named Docker volume environment (e.g. in Docker Compose)
+    volume_name = os.getenv("DOCKER_VOLUME_NAME")
+    if volume_name:
+        # Named volume mounting: mount the entire named volume at its container path,
+        # and set the working directory to the specific request directory inside it.
+        volume_mount = f"{volume_name}:/tmp/code_craft"
+        working_dir_in_container = abs_working_dir
+        logger.info(f"Using named volume mounting: {volume_mount} working inside {working_dir_in_container}")
+    else:
+        # Standard bind mounting
+        volume_mount = f"{abs_working_dir}:/workspace"
+        working_dir_in_container = "/workspace"
+        logger.info(f"Using standard bind mounting: {volume_mount}")
+
     docker_cmd = [
         "docker",
         "run",
@@ -42,9 +56,9 @@ def run_in_sandbox(command: str | list[str], working_dir: str) -> dict:
         "--user",
         SandboxLimits.USER,  # Run as non-root user
         "-v",
-        f"{abs_working_dir}:/workspace",  # Mount working directory
+        volume_mount,
         "-w",
-        "/workspace",  # Set working directory
+        working_dir_in_container,
         SandboxLimits.IMAGE_NAME,  # Image name
     ]
 
